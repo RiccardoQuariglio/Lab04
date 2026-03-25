@@ -27,8 +27,34 @@ class View(object):
         )
 
         # Add your stuff here
+        self._drdwLanguage = ft.Dropdown(label="Select language",
+                                     expand=True,
+                                     options = [
+                                        ft.dropdown.Option("italian"),
+                                        ft.dropdown.Option("english"),
+                                        ft.dropdown.Option("spanish"),
+                                     ],
+                                     on_change = self.__controller.checkLanguage,
+                                     )
+        row1 = ft.Row(controls = [self._drdwLanguage], alignment=ft.MainAxisAlignment.CENTER)
 
-        # self.page.add([])
+        self._drdwResearch = ft.Dropdown(label="Search Modality",
+                                         options = [
+                                             ft.dropdown.Option(("Default")),
+                                             ft.dropdown.Option(("Linear")),
+                                             ft.dropdown.Option(("Dichotomic")),
+                                         ],
+                                         on_change = self.__controller.checkResearch,
+                                         )
+        self._txtInSentence = ft.TextField(label="Add your sentence here",
+                                           expand=True, width="200")
+        self._btnSpellCheck = ft.ElevatedButton(text="Spell Check",
+                                                on_click = self.__controller.handleSpellCheck,
+                                                width="200")
+        row2 = ft.Row(controls=[self._drdwResearch, self._txtInSentence, self._btnSpellCheck])
+
+        self._lvOut = ft.ListView(expand=True, spacing=10, padding=20, auto_scroll=True)
+        self.page.add(row1, row2, self._lvOut)
 
         self.page.update()
 

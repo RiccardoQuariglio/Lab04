@@ -56,6 +56,82 @@ class SpellChecker:
               "4. Exit\n" +
               "______________________________\n")
 
+    def handleSpellCheck(self, e):
+        self._view._lvOut.controls.clear()
+        txtIn = self._view._txtInSentence.value
+        if txtIn == "":
+            self._view._lvOut.controls.append(
+                ft.Text("Attention please: enter a non-empty sentence", color="red")
+            )
+            self._view.update()
+            return
+
+        language = self._view._drdwLanguage.value
+        if language == None:
+            self._view._lvOut.controls.append(
+                ft.Text("Attention please: select a language", color="red")
+            )
+            self._view.update()
+            return
+
+        modality = self._view._drdwResearch.value
+        if modality == None:
+            self._view._lvOut.controls.append(
+                ft.Text("Attention please: select a type of research", color="red")
+            )
+            self._view.update()
+            return
+
+
+        paroleErrate, tempo = self.handleSentence(txtIn, language, modality)
+
+        self._view._lvOut.controls.append(
+            ft.Text(f"Frase inserita: {txtIn}\n\n"
+                    f"Parole Errate: {paroleErrate}\n\n"
+                    f"Tempo richiesto dalla ricerca: {tempo}")
+        )
+        self._view._txtInSentence.value = ""
+        self._view.update()
+
+
+
+
+    def checkLanguage(self, e):
+        language = self._view._drdwLanguage.value
+        if language == "italian":
+            self._view._lvOut.controls.append(
+                ft.Text("Language selected: italiano")
+            )
+            self._view.update()
+        if language == "english":
+            self._view._lvOut.controls.append(
+                ft.Text("Language selected: english")
+            )
+            self._view.update()
+        if language == "spanish":
+            self._view._lvOut.controls.append(
+                ft.Text("Language selected: espanol")
+            )
+            self._view.update()
+
+    def checkResearch(self, e):
+        research = self._view._drdwResearch.value
+        if research == "Default":
+            self._view._lvOut.controls.append(
+                ft.Text("Type of research selected: 'default'")
+            )
+            self._view.update()
+        if research == "Linear":
+            self._view._lvOut.controls.append(
+                ft.Text("Type of research selected: linear")
+            )
+            self._view.update()
+        if research == "Dichotomic":
+            self._view._lvOut.controls.append(
+                ft.Text("Type of research selected: dichotomic")
+            )
+            self._view.update()
+
 
 def replaceChars(text):
     chars = "\\`*_{}[]()>#+-.!$?%^;,=_~"
